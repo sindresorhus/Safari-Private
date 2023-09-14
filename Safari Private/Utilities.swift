@@ -37,8 +37,3 @@ enum Permissions {
 		}
 	}
 }
-
-
-func delay(seconds: TimeInterval, closure: @escaping () -> Void) {
-	DispatchQueue.main.asyncAfter(deadline: .now() + seconds, execute: closure)
-}

@@ -10,7 +10,7 @@ The use-case is being able to open a URL in a private Safari window from a brows
 
 [**Latest release**](https://github.com/sindresorhus/Safari-Private/releases/latest)
 
-Requires macOS 12 or later.
+<sup>Requires macOS 13 or later.</sup>
 
 ## Install
 
@@ -23,6 +23,10 @@ Requires macOS 12 or later.
 Open a URL with the app like you would with normal Safari.
 
 For example, enable the “Safari Private” browser in the Velja settings and then select it in the browser prompt when clicking a link.
+
+## Related
+
+- [Copy URL](https://github.com/sindresorhus/Copy-URL) - Adds copy functionality to browser picker apps
 
 ## Links
 
