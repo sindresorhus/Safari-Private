@@ -10,12 +10,24 @@ struct AppMain: App {
 }
 
 private final class AppDelegate: NSObject, NSApplicationDelegate {
+	var count: Int = 0
+
+	func terminateIfNecessary() {
+		if (count > 0) {
+			count -= 1
+			delay(seconds: 10) {
+				self.terminateIfNecessary()
+			}
+		} else {
+			NSApp.terminate(nil)
+		}
+	}
+
 	func applicationDidFinishLaunching(_ notification: Notification) {
 		_ = Permissions.Accessibility.requestAccess()
 
-		delay(seconds: 10) {
-			NSApp.terminate(nil)
-		}
+		count += 1
+		terminateIfNecessary()
 	}
 
 	func application(_ application: NSApplication, open urls: [URL]) {
@@ -27,7 +39,8 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 			return
 		}
 
+		count += 1
 		openPrivateSafariWindow(with: urls)
-		NSApp.terminate(nil)
+		terminateIfNecessary()
 	}
 }
