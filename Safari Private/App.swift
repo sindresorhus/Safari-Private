@@ -10,13 +10,11 @@ struct AppMain: App {
 }
 
 private final class AppDelegate: NSObject, NSApplicationDelegate {
+	private var task: Task<Void, Never>?
+
 	func applicationDidFinishLaunching(_ notification: Notification) {
 		_ = Permissions.Accessibility.requestAccess()
-
-		Task {
-			try? await Task.sleep(for: .seconds(10))
-			NSApp.terminate(nil)
-		}
+		scheduleQuit()
 	}
 
 	func application(_ application: NSApplication, open urls: [URL]) {
@@ -29,6 +27,18 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 		}
 
 		openPrivateSafariWindow(with: urls)
-		NSApp.terminate(nil)
+		scheduleQuit()
+	}
+
+	@MainActor
+	private func scheduleQuit() {
+		task?.cancel()
+
+		task = Task {
+			do {
+				try await Task.sleep(for: .seconds(10))
+				NSApp.terminate(nil)
+			} catch {}
+		}
 	}
 }
